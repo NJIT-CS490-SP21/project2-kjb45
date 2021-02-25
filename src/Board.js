@@ -11,7 +11,7 @@ const [board, setBoard] = useState([]);
 function clicked(index){
     //const userInput = useRef.current.value;
     console.log("box clicked");
-    setBoard(prevBoard => [...prevBoard, 'X']);
+    setBoard(prevBoard => [...prevBoard[index], 'X']);
     
 }
 
