@@ -13,6 +13,8 @@ function clicked(index){
     //let newBoard = [];
     console.log("box clicked");
     setBoard(prevBoard => [...prevBoard,'X']);
+    //listcopy[index] = ''; <-- answers
+    //return listcopy; <-- answers
     console.log(board);
     var move = board[0];
     console.log(move);
@@ -35,6 +37,9 @@ return (
         <Box />
         <Box />
         <Box />
+        <div>
+            {board}
+        </div>
     </div>
     
 
