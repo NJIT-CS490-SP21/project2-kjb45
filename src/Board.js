@@ -6,7 +6,7 @@ import { Box } from './Box.js'
 
 export function Board(props){
 
-const [board, setBoard] = useState(['','','','','','','','','']);
+const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 
 function clicked(index){
