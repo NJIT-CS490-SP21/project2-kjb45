@@ -7,8 +7,7 @@ import { Box } from './Box.js'
 export function Board(props){
 
 const [board, setBoard] = useState(['','','','','','','','','']);
-const [move, setMove] = useState(['']);
-var trueIndex;
+const [move, setMove] = useState(0);
 
 function clicked(index){
     //const userInput = useRef.current.value;
@@ -16,14 +15,17 @@ function clicked(index){
     console.log("box clicked");
     setBoard(prevBoard => {
         const boardCopy = [...prevBoard];
-        boardCopy[index] = 'X';
+        
+        (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
         return boardCopy;
     });
+    
+    (move === 0 ? (setMove(1)) : setMove(0));
 
 }
 
 console.log(board);
-
+console.log(move);
 
 return (
     <div className="board">
