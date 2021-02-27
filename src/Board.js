@@ -7,6 +7,7 @@ import { Box } from './Box.js'
 export function Board(props){
 
 const [board, setBoard] = useState(['','','','','','','','','']);
+const [move, setMove] = useState(['']);
 var trueIndex;
 
 function clicked(index){
@@ -19,42 +20,23 @@ function clicked(index){
         return boardCopy;
     });
 
-
-    function getIndex(index){
-        console.log("this is the index");
-        console.log(index);
-        
-    }
-    
-    trueIndex = index;
-    console.log("This is the true index");
-    console.log(trueIndex);
-    //listcopy[index] = ''; <-- answers
-    //return listcopy; <-- answers
-    var move = board[index];
-    console.log(move);
-    //let item = newBoard[index];
-    //console.log(index);
 }
 
 console.log(board);
-//console.log(trueIndex);
-//console.log("This is the move");
-//console.log(move);
 
 
 return (
     <div className="board">
         
-        <Box onClick={() => clicked(0)} />
-        <Box onClick={() => clicked(1)} />
-        <Box onClick={() => clicked(2)} />
-        <Box onClick={() => clicked(3)} />
-        <Box onClick={() => clicked(4)} />
-        <Box onClick={() => clicked(5)} />
-        <Box onClick={() => clicked(6)} />
-        <Box onClick={() => clicked(7)} />
-        <Box onClick={() => clicked(8)} />
+        <Box onClick={() => clicked(0)} newMove={board[0]}/>
+        <Box onClick={() => clicked(1)} newMove={board[1]}/>
+        <Box onClick={() => clicked(2)} newMove={board[2]}/>
+        <Box onClick={() => clicked(3)} newMove={board[3]}/>
+        <Box onClick={() => clicked(4)} newMove={board[4]}/>
+        <Box onClick={() => clicked(5)} newMove={board[5]}/>
+        <Box onClick={() => clicked(6)} newMove={board[6]}/>
+        <Box onClick={() => clicked(7)} newMove={board[7]}/>
+        <Box onClick={() => clicked(8)} newMove={board[8]}/>
         
         <div>
             {board}
