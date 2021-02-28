@@ -38,6 +38,16 @@ def on_move(data): # data is whatever arg you pass in your emit call on client
     # the client that emmitted the event that triggered this function
     socketio.emit('board',  data, broadcast=True, include_self=False)
 
+@socketio.on('new user')
+def on_newUser(data):
+    print('new user connected!')
+    print(str(data))
+    socketio.emit('new user',  data, broadcast=True, include_self=False)
+
+    
+
+
+
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 socketio.run(
     app,

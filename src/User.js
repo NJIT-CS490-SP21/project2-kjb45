@@ -1,26 +1,47 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 
 const socket = io(); //connects to socket connection
 
-export function User(props){
+export function User(){
 
 const inputRef = useRef(null);    
-const [user, setUser] = useState([]);
+const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
 
-function getCurrentUser(name) {
+function getCurrentUser() {
     const user = inputRef.current.value;
-    setCurrentUser(name);
+    setCurrentUser(user);
+    setUsers(prevUser => [...prevUser, user]);
+    socket.emit('new user', {user: user});
+
     
 }
 
+useEffect(() => {
+    //listening for a new move event
+    //run the code in the function that is passed in as the second arg
+    
+    socket.on('new user', (data) => {
+       console.log('New user event recieved');
+       console.log(data);
+       setUsers(prevUser => [...prevUser, data['user']]);
+       
+    });
+}, []);
+
+
+console.log(users);
 return(
     <div>
         <input ref={inputRef} type="text" />
         <button onClick={()=> getCurrentUser()}>Submit your User</button>
         <div>{currentUser}</div>
+        <div>{users.map((item) => (
+                <li>{item}</li>
+            ))}
+        </div>
     </div>
     );
 
