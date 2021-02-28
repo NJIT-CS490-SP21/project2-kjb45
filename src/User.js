@@ -10,16 +10,16 @@ export function User(){
 const inputRef = useRef(null);    
 const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
-const [loggedIn, setLoggedIn] = useState(false);
+
 
 function getCurrentUser() {
     const user = inputRef.current.value;
     setCurrentUser(user);
     setUsers(prevUser => [...prevUser, user]);
     socket.emit('new user', {user: user});
-    setLoggedIn(true);
 
 }
+
 
 useEffect(() => {
     //listening for a new move event
@@ -32,6 +32,7 @@ useEffect(() => {
        
     });
 }, []);
+
 
 console.log(users);
 return(
@@ -46,6 +47,8 @@ return(
     </div>
     );
 
-    
+
 }
+
+
 

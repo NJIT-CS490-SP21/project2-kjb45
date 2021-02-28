@@ -2,7 +2,6 @@ import React from 'react';
 import './Board.css';
 import { useState, useRef, useEffect } from 'react';
 import { Box } from './Box.js'
-import { User } from './User.js'
 import io from 'socket.io-client';
 
 
@@ -13,6 +12,7 @@ const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 
 
+    
 function clicked(index){
     //const userInput = useRef.current.value;
     //let newBoard = [];
@@ -32,6 +32,7 @@ function clicked(index){
 }
 
 
+
 useEffect(() => {
     //listening for a new move event
     //run the code in the function that is passed in as the second arg
@@ -45,7 +46,9 @@ useEffect(() => {
            return boardCopy;
        });
        
+       
     });
+    
 }, []);
 
 console.log(board);
@@ -54,6 +57,7 @@ console.log(move);
 return (
     <div className="board">
         
+
         <Box onClick={() => clicked(0)} newMove={board[0]}/>
         <Box onClick={() => clicked(1)} newMove={board[1]}/>
         <Box onClick={() => clicked(2)} newMove={board[2]}/>
