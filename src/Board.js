@@ -10,7 +10,8 @@ export function Board(props){
 
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
-
+const [canPlay, setCanPlay] = useState(false);
+const [turn, setTurn] = useState(0);
 
     
 function clicked(index){
@@ -45,10 +46,17 @@ useEffect(() => {
            boardCopy = data['board'];
            return boardCopy;
        });
-       
-       
     });
-    
+       
+    socket.on('turn', (data) => {
+       console.log('It is someones turn');
+       console.log(data);
+       
+       
+    });  
+       
+
+
 }, []);
 
 console.log(board);

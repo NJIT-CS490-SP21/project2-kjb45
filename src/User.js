@@ -10,16 +10,27 @@ export function User(){
 const inputRef = useRef(null);    
 const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
+const [userCount, setUserCount] = useState(0);
 
 
 function getCurrentUser() {
     const user = inputRef.current.value;
     setCurrentUser(user);
     setUsers(prevUser => [...prevUser, user]);
+    setUserCount(prevCount => prevCount +1);
     socket.emit('new user', {user: user});
+
 
 }
 
+
+//console.log(userCount);
+let useId = userCount;
+socket.emit('turn', {
+    user: currentUser,
+    id: useId,
+    
+});
 
 useEffect(() => {
     //listening for a new move event

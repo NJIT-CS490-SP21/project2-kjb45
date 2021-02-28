@@ -45,8 +45,11 @@ def on_newUser(data):
     socketio.emit('new user',  data, broadcast=True, include_self=False)
 
     
-
-
+@socketio.on('turn')
+def onTurn(data):
+    print('it is player '+ str(data['id']) + 's turn')
+    socketio.emit('turn',  data, broadcast=True, include_self=False)
+    
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 socketio.run(
