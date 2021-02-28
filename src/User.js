@@ -37,8 +37,8 @@ return(
     <div>
         <input ref={inputRef} type="text" />
         <button onClick={()=> getCurrentUser()}>Submit your User</button>
-        <div>{currentUser}</div>
-        <div>{users.map((item) => (
+        <div>You are logged in as: {currentUser}</div>
+        <div>Users in Lobby{users.map((item) => (
                 <li>{item}</li>
             ))}
         </div>
