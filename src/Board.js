@@ -27,7 +27,7 @@ function clicked(index){
         
     });
     
-    (move === 0 ? (setMove(1)) : setMove(0));
+    (move === 0 ? setMove(1) : setMove(0));
 
 
 }
@@ -51,14 +51,18 @@ useEffect(() => {
     socket.on('turn', (data) => {
        console.log('It is someones turn');
        console.log(data);
-       
-       
+       console.log(data['id']);
+       let check = data['id'];
+       console.log(check);
+       (check = 1 ? setCanPlay(true) : null);       
     });  
        
 
 
 }, []);
 
+console.log("this is can play");
+console.log(canPlay);
 console.log(board);
 console.log(move);
 
