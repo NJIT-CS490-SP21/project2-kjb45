@@ -2,6 +2,7 @@ import React from 'react';
 import './Board.css';
 import { useState, useRef, useEffect } from 'react';
 import { Box } from './Box.js'
+import { User } from './User.js'
 import io from 'socket.io-client';
 
 
@@ -10,6 +11,7 @@ export function Board(props){
 
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
+
 
 function clicked(index){
     //const userInput = useRef.current.value;
@@ -67,7 +69,6 @@ return (
         </div>
     </div>
     
-
-    );
+    )
     
 }

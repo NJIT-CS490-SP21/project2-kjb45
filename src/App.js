@@ -11,12 +11,19 @@ const socket = io(); //connects to socket connection
 
 function App() {
     
+const [isShown, setShown] = useState(true);
+function onShowHide() {
+    setShown((prevShown) => {
+        return !prevShown;
+        
+    });
+}
+
     
      return (
         <div className="App">
             <User />
-            <Board />
-        
+            {isShown === true ? <Board /> : null}
         </div>
         
     );

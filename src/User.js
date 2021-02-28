@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
+import { Board } from './Board.js'
 import io from 'socket.io-client';
 
 const socket = io(); //connects to socket connection
@@ -9,14 +10,15 @@ export function User(){
 const inputRef = useRef(null);    
 const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
+const [loggedIn, setLoggedIn] = useState(false);
 
 function getCurrentUser() {
     const user = inputRef.current.value;
     setCurrentUser(user);
     setUsers(prevUser => [...prevUser, user]);
     socket.emit('new user', {user: user});
+    setLoggedIn(true);
 
-    
 }
 
 useEffect(() => {
@@ -31,12 +33,11 @@ useEffect(() => {
     });
 }, []);
 
-
 console.log(users);
 return(
     <div>
         <input ref={inputRef} type="text" />
-        <button onClick={()=> getCurrentUser()}>Submit your User</button>
+        <button onClick={()=> getCurrentUser()} >Login!</button>
         <div>You are logged in as: {currentUser}</div>
         <div>Users in Lobby{users.map((item) => (
                 <li>{item}</li>
