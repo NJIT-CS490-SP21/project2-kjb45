@@ -22,6 +22,9 @@ function getCurrentUser() {
     const user = inputRef.current.value;
     let newCount = count + 1;
     let sendUsers = users;
+    let player1 = '';
+    let player2 = '';
+    let spectatorList = [];
     //(newCount === 1 ? setPlayer1(user) : null);
     //(newCount === 2 ? setPlayer2(user) : null);
     //(newCount > 2 ? setSpectators(spectators => [...spectators, user]) : null);
@@ -29,10 +32,38 @@ function getCurrentUser() {
     setCurrentUser(user);
     setUsers([...sendUsers, user]);
     setCount(newCount);
-    socket.emit('new user', {
+   
+    (newCount === 1 ? player1 = user : null);
+    (newCount === 2 ? player2 = user : null);
+    (newCount === 1 ? setPlayer1(player1) : null);
+    (newCount === 2 ? setPlayer2(player2) : null);
+    (newCount > 2 ? [...spectatorList, user] : null);
+    (newCount > 2 ? setSpectators(spectatorList) : null);
+    console.log("This is the list of spectators");
+    console.log(spectatorList);
+
+    (newCount === 1 ? socket.emit('new user', {
         user: user,
-        count: newCount
-    });
+        count: newCount,
+        player : 'X'
+        
+    }) : null);    
+    
+    
+    (newCount === 2 ? socket.emit('new user', {
+        user: user,
+        count: newCount,
+        player : 'O'
+        
+    }) : null); 
+    
+    (newCount > 2 ? socket.emit('new user', {
+        user: user,
+        count: newCount,
+        player : 'Spectator'
+    }) : null);
+    
+    
     
     socket.emit('turn', {users: sendUsers});
     
@@ -58,6 +89,7 @@ useEffect(() => {
 
 
 //console.log(users);
+console.log("this is")
 return(
     <div>
         <input ref={inputRef} type="text" />
