@@ -17,6 +17,8 @@ const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 const [canPlay, setCanPlay] = useState(true);
 const [turn, setTurn] = useState(0);
+const [playx, setPlayX] = useState();
+const [playo, setPlayO] = useState();
 
 
     

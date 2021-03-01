@@ -33,39 +33,52 @@ function getCurrentUser() {
     setUsers([...sendUsers, user]);
     setCount(newCount);
    
-    (newCount === 1 ? player1 = user : null);
-    (newCount === 2 ? player2 = user : null);
-    (newCount === 1 ? setPlayer1(player1) : null);
-    (newCount === 2 ? setPlayer2(player2) : null);
-    (newCount > 2 ? [...spectatorList, user] : null);
-    (newCount > 2 ? setSpectators(spectatorList) : null);
+    player1 = newCount === 1 ? user : null;   
+    player2 = newCount === 2 ? user : null;
+        // (newCount = 2 ? setPlayer2(player2) : null);
+    // (newCount = 3 ? [...spectatorList, user] : null);
+    //(newCount > 2 ? setSpectators(spectatorList) : null);
     console.log("This is the list of spectators");
     console.log(spectatorList);
+    console.log("This is player 1");
+    console.log(player1);
 
-    (newCount === 1 ? socket.emit('new user', {
-        user: user,
-        count: newCount,
-        player : 'X'
+    if (newCount === 1) {
+        socket.emit('new user', {
+            user: user,
+            count: newCount,
+            player : 'X'
         
-    }) : null);    
-    
-    
-    (newCount === 2 ? socket.emit('new user', {
-        user: user,
-        count: newCount,
-        player : 'O'
+        })
         
-    }) : null); 
+    };    
     
-    (newCount > 2 ? socket.emit('new user', {
-        user: user,
-        count: newCount,
-        player : 'Spectator'
-    }) : null);
+    if (newCount === 2) {
+        socket.emit('new user', {
+            user: user,
+            count: newCount,
+            player : 'O'
+        
+        })
+        
+    };        
+    
+    // (newCount === 2 ? socket.emit('new user', {
+    //     user: user,
+    //     count: newCount,
+    //     player : 'O'
+        
+    // }) : null); 
+    
+    // (newCount > 2 ? socket.emit('new user', {
+    //     user: user,
+    //     count: newCount,
+    //     player : 'Spectator'
+    // }) : null);
     
     
     
-    socket.emit('turn', {users: sendUsers});
+    //socket.emit('turn', {users: sendUsers});
     
     setLoggedIn(true);
     showBoard();
