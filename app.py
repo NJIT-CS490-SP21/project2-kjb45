@@ -14,6 +14,7 @@ socketio = SocketIO(
     manage_session=False
 )
 
+
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
 def index(filename):
@@ -40,6 +41,8 @@ def on_move(data): # data is whatever arg you pass in your emit call on client
 
 @socketio.on('new user')
 def on_newUser(data):
+    
+   # print("there are " +str(users)+ "in the lobbuy")
     print('new user connected!')
     print(str(data))
     socketio.emit('new user',  data, broadcast=True, include_self=False)
@@ -47,7 +50,7 @@ def on_newUser(data):
     
 @socketio.on('turn')
 def onTurn(data):
-    print('it is player '+ str(data['id']) + 's turn')
+    #print('it is player '+ str(data['id']) + 's turn')
     socketio.emit('turn',  data, broadcast=True, include_self=False)
     
 

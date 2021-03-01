@@ -10,27 +10,23 @@ export function User(){
 const inputRef = useRef(null);    
 const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
-const [userCount, setUserCount] = useState(0);
+const [count, setCount] = useState(0);
 
 
 function getCurrentUser() {
     const user = inputRef.current.value;
+    let prevCount = count;
+    let newCount = prevCount + 1;
     setCurrentUser(user);
     setUsers(prevUser => [...prevUser, user]);
-    setUserCount(prevCount => prevCount +1);
-    socket.emit('new user', {user: user});
-
-
+    setCount(newCount);
+    socket.emit('new user', {
+        user: user,
+        count: newCount
+    });
+    
 }
 
-
-//console.log(userCount);
-let useId = userCount;
-socket.emit('turn', {
-    user: currentUser,
-    id: useId,
-    
-});
 
 useEffect(() => {
     //listening for a new move event
@@ -39,17 +35,19 @@ useEffect(() => {
     socket.on('new user', (data) => {
        console.log('New user event recieved');
        console.log(data);
+       console.log(data['user'])
        setUsers(prevUser => [...prevUser, data['user']]);
+       setCount(data['count']);
        
     });
 }, []);
 
 
-console.log(users);
+//console.log(users);
 return(
     <div>
         <input ref={inputRef} type="text" />
-        <button onClick={()=> getCurrentUser()} >Login!</button>
+        <button onClick={() => getCurrentUser()} >Login!</button>
         <div>You are logged in as: {currentUser}</div>
         <div>Users in Lobby{users.map((item) => (
                 <li>{item}</li>
