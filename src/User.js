@@ -35,15 +35,14 @@ function getCurrentUser() {
    
     player1 = newCount === 1 ? user : null;   
     player2 = newCount === 2 ? user : null;
-        // (newCount = 2 ? setPlayer2(player2) : null);
-    // (newCount = 3 ? [...spectatorList, user] : null);
-    //(newCount > 2 ? setSpectators(spectatorList) : null);
+  
     console.log("This is the list of spectators");
     console.log(spectatorList);
     console.log("This is player 1");
     console.log(player1);
 
     if (newCount === 1) {
+        setPlayer1(player1);
         socket.emit('new user', {
             user: user,
             count: newCount,
@@ -54,6 +53,7 @@ function getCurrentUser() {
     };    
     
     if (newCount === 2) {
+        setPlayer2(player2);
         socket.emit('new user', {
             user: user,
             count: newCount,
@@ -63,21 +63,23 @@ function getCurrentUser() {
         
     };        
     
-    // (newCount === 2 ? socket.emit('new user', {
-    //     user: user,
-    //     count: newCount,
-    //     player : 'O'
+     if (newCount > 2) {
+        //spectatorList  [...spectatorList, user];
+
+        setSpectators([...spectators, user]);
+        //need to update list
+        socket.emit('new user', {
+            user: user,
+            count: newCount,
+            player : 'spectator'
         
-    // }) : null); 
+        })
+     };
     
-    // (newCount > 2 ? socket.emit('new user', {
-    //     user: user,
-    //     count: newCount,
-    //     player : 'Spectator'
-    // }) : null);
+  
     
-    
-    
+    console.log("this is the new spectator list");
+    console.log(spectatorList);
     //socket.emit('turn', {users: sendUsers});
     
     setLoggedIn(true);
