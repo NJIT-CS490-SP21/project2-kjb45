@@ -6,12 +6,18 @@ import io from 'socket.io-client';
 
 
 const socket = io(); //connects to socket connection
+
+export function showBoard(){
+    
+    document.getElementById("brd").style.display="grid";
+}
 export function Board(props){
 
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
-const [canPlay, setCanPlay] = useState(false);
+const [canPlay, setCanPlay] = useState(true);
 const [turn, setTurn] = useState(0);
+
 
     
 function clicked(index){
@@ -44,12 +50,10 @@ useEffect(() => {
     });
        
     socket.on('turn', (data) => {
-       console.log(data);
+        console.log("this is user list from board.js");
+        console.log(data);
        //console.log(data['id']);
-       let check = data['id'];
-       //console.log(check);
-       (check = 1 ? setCanPlay(true) : null);   
-       (check = 2 ? setCanPlay(true) : null);
+   
     });  
        
     socket.on('new user', (data) => {
@@ -57,21 +61,19 @@ useEffect(() => {
        console.log(data);
        let check = data['count'];
        
-       setCanPlay(false);
-       (check = 1 ? setCanPlay(true) : null);   
-       (check = 2 ? setCanPlay(true) : null);
+      // (check === 1 ? setCanPlay(true) : null);   
+      // (check === 2 ? setCanPlay(true) : null);
         
     });
 
 }, []);
 
-console.log("this is can play");
-console.log(canPlay);
+
 //console.log(board);
 //console.log(move);
 
 return (
-    <div className="board">
+    <div className="board" id="brd">
     
 
         {canPlay === true ?<Box onClick={() => clicked(0)} newMove={board[0]}/> : <Box />}

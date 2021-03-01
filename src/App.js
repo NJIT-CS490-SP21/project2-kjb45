@@ -52,7 +52,7 @@ useEffect(() => {
 return (
     <div className="App">
         <User />
-        {isShown === true ? <Board /> : null}   
+        <Board />
     </div>
         
     );

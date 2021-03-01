@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import { Board } from './Board.js'
+import { Board, showBoard } from './Board.js'
 import io from 'socket.io-client';
 
 const socket = io(); //connects to socket connection
@@ -11,19 +11,33 @@ const inputRef = useRef(null);
 const [users, setUsers] = useState([]);
 const [currentUser, setCurrentUser] = useState('');
 const [count, setCount] = useState(0);
+const [player1, setPlayer1] = useState('');
+const [player2, setPlayer2] = useState('');
+const [spectators, setSpectators] = useState([]);
+const [isLoggedIn, setLoggedIn] = useState(false);
+
 
 
 function getCurrentUser() {
     const user = inputRef.current.value;
-    let prevCount = count;
-    let newCount = prevCount + 1;
+    let newCount = count + 1;
+    let sendUsers = users;
+    //(newCount === 1 ? setPlayer1(user) : null);
+    //(newCount === 2 ? setPlayer2(user) : null);
+    //(newCount > 2 ? setSpectators(spectators => [...spectators, user]) : null);
+
     setCurrentUser(user);
-    setUsers(prevUser => [...prevUser, user]);
+    setUsers([...sendUsers, user]);
     setCount(newCount);
     socket.emit('new user', {
         user: user,
         count: newCount
     });
+    
+    socket.emit('turn', {users: sendUsers});
+    
+    setLoggedIn(true);
+    showBoard();
     
 }
 
@@ -53,7 +67,9 @@ return(
                 <li>{item}</li>
             ))}
         </div>
-    </div>
+    </div> 
+    
+ 
     );
 
 
