@@ -36,10 +36,10 @@ function getCurrentUser() {
     player1 = newCount === 1 ? user : null;   
     player2 = newCount === 2 ? user : null;
   
-    console.log("This is the list of spectators");
-    console.log(spectatorList);
-    console.log("This is player 1");
-    console.log(player1);
+    // console.log("This is the list of spectators");
+    // console.log(spectatorList);
+    // console.log("This is player 1");
+    // console.log(player1);
 
     if (newCount === 1) {
         setPlayer1(player1);
@@ -78,8 +78,8 @@ function getCurrentUser() {
     
   
     
-    console.log("this is the new spectator list");
-    console.log(spectatorList);
+    // console.log("this is the new spectator list");
+    // console.log(spectatorList);
     //socket.emit('turn', {users: sendUsers});
     
     setLoggedIn(true);
@@ -104,7 +104,7 @@ useEffect(() => {
 
 
 //console.log(users);
-console.log("this is")
+//console.log("this is")
 return(
     <div>
         <input ref={inputRef} type="text" />

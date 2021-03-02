@@ -14,6 +14,8 @@ socketio = SocketIO(
     manage_session=False
 )
 
+players = []
+spectators = []
 
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
@@ -45,6 +47,15 @@ def on_newUser(data):
    # print("there are " +str(users)+ "in the lobbuy")
     print('new user connected!')
     print(str(data))
+    if (data['count'] < 3):
+        players.append(data['user'])
+    else:
+        spectators.append(data['user'])
+        
+    print('this is the players')
+    print(players)
+    print('this is the spectators')
+    print(spectators)
     socketio.emit('new user',  data, broadcast=True, include_self=False)
 
     

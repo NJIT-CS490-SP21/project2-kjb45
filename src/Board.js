@@ -19,6 +19,7 @@ const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 const [canPlay, setCanPlay] = useState(false);
 const [turn, setTurn] = useState('');
+const [lastTurn, setLastTurn] = useState('');
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
 const [userList, setUserList] = useState([]);
@@ -30,33 +31,41 @@ function clicked(index){
     //let newBoard = [];
     console.log("box clicked");
     const boardCopy = [...board];
+    const play = lastTurn;
+    //if ()
     (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
     setBoard(boardCopy);
     socket.emit('board', {
         board: boardCopy,
-        //move: 
-        
+        move: move,
+        player1: playx,
+        player2: playo
+        //sender: 
         
     });
-
     (move === 0 ? setMove(1) : setMove(0));
 
-    //socket.emit('turn', )
+    
 }
 
-
+console.log("this is the current move");
+console.log(move);
 
 useEffect(() => {
     //listening for a new move event
     //run the code in the function that is passed in as the second arg
     socket.on('board', (data) => {
-       console.log('New move event recieved');
-       console.log(data);
-       setBoard(prevBoard => {
+        console.log('New move event recieved');
+        console.log(data);
+        let currentMove = data['move'];
+        setBoard(prevBoard => {
            let boardCopy = [...prevBoard]; 
            boardCopy = data['board'];
            return boardCopy;
-       });
+        });
+        (currentMove === 0 ? setMove(1) : setMove(0));
+
+
     });
        
        
@@ -76,26 +85,28 @@ useEffect(() => {
             setPlayO(data['user']);
         }
         
-        if (check > 2 ){
-            //setCanPlay(false);
-        }
+        // if (check > 2 ){
+        //     setCanPlay(false);
+        // }
         
-        
-
     });
 
 }, []);
 
 
-console.log("this is the board userlist");
-console.log(userList);
+// console.log("this is the board userlist 0");
+// console.log(userList[0]);
+// console.log("this is playerX");
+// console.log(playx);
+// console.log("this is player0");
+// console.log(playo);
+
 //console.log(board);
 //console.log(move);
 
 return (
     <div className="board" id="brd">
-    
-
+        
         {canPlay === true ?<Box onClick={() => clicked(0)} newMove={board[0]}/> : <Box />}
         {canPlay === true ?<Box onClick={() => clicked(1)} newMove={board[1]}/> : <Box />}
         {canPlay === true ?<Box onClick={() => clicked(2)} newMove={board[2]}/> : <Box />}
