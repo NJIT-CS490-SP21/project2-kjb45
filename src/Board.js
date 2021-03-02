@@ -10,15 +10,18 @@ const socket = io(); //connects to socket connection
 export function showBoard(){
     
     document.getElementById("brd").style.display="grid";
+
+    
 }
 export function Board(props){
 
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
-const [canPlay, setCanPlay] = useState(true);
-const [turn, setTurn] = useState(0);
-const [playx, setPlayX] = useState();
-const [playo, setPlayO] = useState();
+const [canPlay, setCanPlay] = useState(false);
+const [turn, setTurn] = useState('');
+const [playx, setPlayX] = useState('');
+const [playo, setPlayO] = useState('');
+const [userList, setUserList] = useState([]);
 
 
     
@@ -27,9 +30,14 @@ function clicked(index){
     //let newBoard = [];
     console.log("box clicked");
     const boardCopy = [...board];
-    (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O')
+    (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
     setBoard(boardCopy);
-    socket.emit('board', {board: boardCopy});
+    socket.emit('board', {
+        board: boardCopy,
+        //move: 
+        
+        
+    });
 
     (move === 0 ? setMove(1) : setMove(0));
 
@@ -51,26 +59,36 @@ useEffect(() => {
        });
     });
        
-    socket.on('turn', (data) => {
-        console.log("this is user list from board.js");
-        console.log(data);
-       //console.log(data['id']);
-   
-    });  
        
     socket.on('new user', (data) => {
-       console.log("This is user from board");        
-       console.log(data);
-       let check = data['count'];
-       
-      // (check === 1 ? setCanPlay(true) : null);   
-      // (check === 2 ? setCanPlay(true) : null);
+        console.log("This is user from board");        
+        console.log(data);
+        let check = data['count'];
+        let user = data['user'];
+        setUserList(prevList => [...prevList, user]);
+        if (check === 1){
+           setCanPlay(true);
+           setPlayX(data['user']);
+        }
         
+        if (check === 2){
+            setCanPlay(true);
+            setPlayO(data['user']);
+        }
+        
+        if (check > 2 ){
+            //setCanPlay(false);
+        }
+        
+        
+
     });
 
 }, []);
 
 
+console.log("this is the board userlist");
+console.log(userList);
 //console.log(board);
 //console.log(move);
 
