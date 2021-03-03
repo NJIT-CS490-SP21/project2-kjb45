@@ -22,6 +22,7 @@ const [player2, setPlayer2] = useState('');
 const [spectators, setSpectators] = useState([]);
 //const [canPlay, setCanPlay] = useState([]);
 const [winner, setWinner] = useState(['']);
+const [someoneWon, setSomeoneWon] = useState(['']);
 
 
 function getCurrentUser() {
@@ -100,7 +101,9 @@ useEffect(() => {
         console.log("this is from app.js");
         console.log("the winner is: ");
         let winner = data['winner'];
-        setWinner(winner);
+        let winnerName = data['winnerName']
+        setWinner(winnerName);
+        setSomeoneWon(true);
         console.log(winner);
         console.log(data['winnerName']);
         
@@ -112,6 +115,9 @@ useEffect(() => {
 return (
     <div className="App">
         <div>
+            
+            {someoneWon === true ? <div>The winner is: {winner}</div> : null}
+            
             <input ref={inputRef} type="text" />
             <button onClick={() => getCurrentUser()} >Login!</button>
             <div>You are logged in as: {currentUser}</div>
