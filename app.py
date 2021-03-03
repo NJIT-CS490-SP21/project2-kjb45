@@ -39,7 +39,7 @@ def on_move(data): # data is whatever arg you pass in your emit call on client
     print(str(data))
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
-    socketio.emit('board',  data, broadcast=True, include_self=False)
+    socketio.emit('board',  data, broadcast=False)
 
 @socketio.on('new user')
 def on_newUser(data):
@@ -56,7 +56,7 @@ def on_newUser(data):
     print(players)
     print('this is the spectators')
     print(spectators)
-    socketio.emit('new user',  data, broadcast=False)
+    socketio.emit('new user',  data, broadcast=True, include_self=False)
 
     
 @socketio.on('turn')

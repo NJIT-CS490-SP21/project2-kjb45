@@ -14,30 +14,32 @@ export function showBoard(){
 }
 
 export function Board(props){
-
+    
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 const [canPlay, setCanPlay] = useState(false);
-const [turn, setTurn] = useState('');
-const [lastTurn, setLastTurn] = useState('');
+//const [turn, setTurn] = useState('');
+//const [lastTurn, setLastTurn] = useState('');
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
-const [userList, setUserList] = useState([]);
-const [spectatorList, setSpectatorList] = useState([]);
-const [isSpectator, setSpectator] = useState([]);
+//const [userList, setUserList] = useState([]);
+//const [spectatorList, setSpectatorList] = useState([]);
+let currentUser = props.currentUser;
 
+//if (currentUser === playx){
+ //     setCanPlay(true);
+ //}
 
+// if (props.currentUser !== playo){
+//     setCanPlay(true);
     
+// }    
 function clicked(index){
     //const userInput = useRef.current.value;
     //let newBoard = [];
-    if (setSpectator === true){
-    setCanPlay(true);
-    
-    }
+
     console.log("box clicked");
     const boardCopy = [...board];
-    const play = lastTurn;
     //if ()
     (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
     setBoard(boardCopy);
@@ -56,8 +58,6 @@ function clicked(index){
 
 // console.log("this is the current move");
 // console.log(move);
-console.log("this is the current setPlay");
-console.log(canPlay);
 
 useEffect(() => {
     //listening for a new move event
@@ -78,25 +78,25 @@ useEffect(() => {
        
        
     socket.on('new user', (data) => {
-        console.log("This is user from board");        
-        console.log(data);
+        //console.log("This is user from board");        
+        //console.log(data);
         let check = data['count'];
         let user = data['user'];
-        setUserList(prevList => [...prevList, user]);
+        //setUserList(prevList => [...prevList, user]);
         if (check === 1){
-           setCanPlay(true);
-           setPlayX(data['user']);
-           //currentUser = 'playerX';
+          //setCanPlay(true);
+          setPlayX(data['user']);
+          //currentUser = 'playerX';
         }
         
         if (check === 2){
-            setCanPlay(true);
+            //setCanPlay(true);
             setPlayO(data['user']);
             //currentUser = 'playerO';
         }
         
         if (check > 2 ){
-            setCanPlay(false);
+            //setCanPlay(false);
         }
         
     });

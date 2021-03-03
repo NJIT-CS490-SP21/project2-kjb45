@@ -20,6 +20,7 @@ const [count, setCount] = useState(0);
 const [player1, setPlayer1] = useState('');
 const [player2, setPlayer2] = useState('');
 const [spectators, setSpectators] = useState([]);
+const [canPlay, setCanPlay] = useState([]);
 //const [isLoggedIn, setLoggedIn] = useState(false);
 
 
@@ -41,11 +42,6 @@ function getCurrentUser() {
     player1 = newCount === 1 ? user : null;   
     player2 = newCount === 2 ? user : null;
   
-    // console.log("This is the list of spectators");
-    // console.log(spectatorList);
-    // console.log("This is player 1");
-    // console.log(player1);
-
     if (newCount === 1) {
         setPlayer1(player1);
         socket.emit('new user', {
@@ -81,11 +77,6 @@ function getCurrentUser() {
         })
      };
     
- 
-    // console.log("this is the new spectator list");
-    // console.log(spectatorList);
-    //socket.emit('turn', {users: sendUsers});
-    
     //setLoggedIn(true);
     showBoard();
     
@@ -103,19 +94,16 @@ useEffect(() => {
     
     socket.on('new user',(data) => {
         setUserCount(prevCount => prevCount + 1);
-        console.log(data);
-        //user = data['user'];
-   // });
-})
+        //console.log(data);
+        setUsers(prevUser => [...prevUser, data['user']]);
+        setCount(data['count']);
 
 
-///socket.emit('turn', {
- ///   user: user,
-///    id: userCount,
-    
-});    
-///{isShown === true ? <Board /> : null}   
-          
+    });
+
+
+}, []);    
+
 return (
     <div className="App">
         <div>
