@@ -19,12 +19,27 @@ const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
+const [gameComplete, setGameComplete] = useState(false);
+const [plays, setPlays] = useState(0);
+
+function checkWin(){
+    //console.log("reached checkwin function");
+    let checkBoard = board;
+    //console.log(checkBoard);
+    if (checkBoard[0] === checkBoard[1] && checkBoard[0] === checkBoard[2]){
+        console.log("someone has won the game");
+    }
+    
+}
 
 function clicked(index){
     //const userInput = useRef.current.value;
     //let newBoard = [];
     if (props.currentUser === playx || props.currentUser === playo){
     console.log("box clicked");
+    let playCount = plays + 1;
+    console.log(playCount);
+    setPlays(playCount);
     const boardCopy = [...board];
     //if ()
     (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
@@ -33,15 +48,22 @@ function clicked(index){
         board: boardCopy,
         move: move,
         player1: playx,
-        player2: playo
+        player2: playo,
+        playCount: playCount
+        
         //sender: 
         
     });
     (move === 0 ? setMove(1) : setMove(0));
+    
     } 
 }
 
-
+if (plays > 4){
+    console.log('checking for a winner');
+    checkWin();
+    
+}
 
 useEffect(() => {
     //listening for a new move event
@@ -56,6 +78,7 @@ useEffect(() => {
            return boardCopy;
         });
         (currentMove === 0 ? setMove(1) : setMove(0));
+        setPlays(data['playCount']);
 
 
     });
@@ -68,18 +91,13 @@ useEffect(() => {
         let user = data['user'];
         
         if (check === 1){
-          
-          setPlayX(data['user']);
+            setPlayX(data['user']);
         }
         
         if (check === 2){
-            
             setPlayO(data['user']);
         }
-        
-
     });
-
 }, []);
 
 
