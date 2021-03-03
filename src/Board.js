@@ -17,27 +17,13 @@ export function Board(props){
     
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
-const [canPlay, setCanPlay] = useState(false);
-//const [turn, setTurn] = useState('');
-//const [lastTurn, setLastTurn] = useState('');
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
-//const [userList, setUserList] = useState([]);
-//const [spectatorList, setSpectatorList] = useState([]);
-let currentUser = props.currentUser;
 
-//if (currentUser === playx){
- //     setCanPlay(true);
- //}
-
-// if (props.currentUser !== playo){
-//     setCanPlay(true);
-    
-// }    
 function clicked(index){
     //const userInput = useRef.current.value;
     //let newBoard = [];
-
+    if (props.currentUser === playx || props.currentUser === playo){
     console.log("box clicked");
     const boardCopy = [...board];
     //if ()
@@ -52,12 +38,10 @@ function clicked(index){
         
     });
     (move === 0 ? setMove(1) : setMove(0));
-
-    
+    } 
 }
 
-// console.log("this is the current move");
-// console.log(move);
+
 
 useEffect(() => {
     //listening for a new move event
@@ -82,23 +66,18 @@ useEffect(() => {
         //console.log(data);
         let check = data['count'];
         let user = data['user'];
-        //setUserList(prevList => [...prevList, user]);
+        
         if (check === 1){
-          //setCanPlay(true);
+          
           setPlayX(data['user']);
-          //currentUser = 'playerX';
         }
         
         if (check === 2){
-            //setCanPlay(true);
+            
             setPlayO(data['user']);
-            //currentUser = 'playerO';
         }
         
-        if (check > 2 ){
-            //setCanPlay(false);
-        }
-        
+
     });
 
 }, []);
@@ -119,15 +98,15 @@ useEffect(() => {
 return (
     <div className="board" id="brd">
         
-        {canPlay === true ?<Box onClick={() => clicked(0)} newMove={board[0]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(1)} newMove={board[1]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(2)} newMove={board[2]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(3)} newMove={board[3]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(4)} newMove={board[4]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(5)} newMove={board[5]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(6)} newMove={board[6]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(7)} newMove={board[7]}/> : <Box />}
-        {canPlay === true ?<Box onClick={() => clicked(8)} newMove={board[8]}/> : <Box />}
+        <Box onClick={() => clicked(0)} newMove={board[0]}/> 
+        <Box onClick={() => clicked(1)} newMove={board[1]}/> 
+        <Box onClick={() => clicked(2)} newMove={board[2]}/> 
+        <Box onClick={() => clicked(3)} newMove={board[3]}/> 
+        <Box onClick={() => clicked(4)} newMove={board[4]}/> 
+        <Box onClick={() => clicked(5)} newMove={board[5]}/> 
+        <Box onClick={() => clicked(6)} newMove={board[6]}/> 
+        <Box onClick={() => clicked(7)} newMove={board[7]}/> 
+        <Box onClick={() => clicked(8)} newMove={board[8]}/> 
 
         <div>
             {board}
