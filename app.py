@@ -47,23 +47,16 @@ def on_newUser(data):
    # print("there are " +str(users)+ "in the lobbuy")
     print('new user connected!')
     print(str(data))
-    if (data['count'] < 3):
-        players.append(data['user'])
-    else:
-        spectators.append(data['user'])
-        
-    print('this is the players')
-    print(players)
-    print('this is the spectators')
-    print(spectators)
+  
+
     #socketio.emit('new user',  data, broadcast=True, include_self=False)
     socketio.emit('new user',  data, broadcast=False)
 
     
-@socketio.on('turn')
+@socketio.on('winner')
 def onTurn(data):
     #print('it is player '+ str(data['id']) + 's turn')
-    socketio.emit('turn',  data, broadcast=True, include_self=False)
+    socketio.emit('winner',  data, broadcast=False)
     
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg

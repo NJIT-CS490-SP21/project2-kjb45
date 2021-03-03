@@ -20,8 +20,8 @@ const [count, setCount] = useState(0);
 const [player1, setPlayer1] = useState('');
 const [player2, setPlayer2] = useState('');
 const [spectators, setSpectators] = useState([]);
-const [canPlay, setCanPlay] = useState([]);
-//const [isLoggedIn, setLoggedIn] = useState(false);
+//const [canPlay, setCanPlay] = useState([]);
+const [winner, setWinner] = useState(['']);
 
 
 function getCurrentUser() {
@@ -74,7 +74,6 @@ function getCurrentUser() {
         })
      };
     
-    //setLoggedIn(true);
     showBoard();
     
 }
@@ -96,6 +95,16 @@ useEffect(() => {
 
 
     });
+    
+    socket.on('winner', (data) => {
+        console.log("this is from app.js");
+        console.log("the winner is: ");
+        let winner = data['winner'];
+        setWinner(winner);
+        console.log(winner);
+        console.log(data['winnerName']);
+        
+    })
 
 
 }, []);    
