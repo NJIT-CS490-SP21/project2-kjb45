@@ -23,6 +23,7 @@ const [spectators, setSpectators] = useState([]);
 //const [canPlay, setCanPlay] = useState([]);
 const [winner, setWinner] = useState(['']);
 const [someoneWon, setSomeoneWon] = useState(['']);
+const [draw, setSomeoneDrew] = useState(false);
 
 
 function getCurrentUser() {
@@ -107,7 +108,14 @@ useEffect(() => {
         console.log(winner);
         console.log(data['winnerName']);
         
-    })
+    });
+    
+    socket.on('draw', (data) => {
+        let winner = data['winner'];
+        setWinner(winner);
+        setSomeoneDrew(true);
+        
+    });
 
 
 }, []);    
@@ -117,7 +125,7 @@ return (
         <div>
             
             {someoneWon === true ? <div>The winner is: {winner}</div> : null}
-            
+            {draw === true ? <div>The game ended in a draw </div> : null}
             <input ref={inputRef} type="text" />
             <button onClick={() => getCurrentUser()} >Login!</button>
             <div>You are logged in as: {currentUser}</div>

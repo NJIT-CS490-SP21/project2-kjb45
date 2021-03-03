@@ -54,9 +54,15 @@ def on_newUser(data):
 
     
 @socketio.on('winner')
-def onTurn(data):
+def onWin(data):
     #print('it is player '+ str(data['id']) + 's turn')
     socketio.emit('winner',  data, broadcast=False)
+    
+
+@socketio.on('draw')
+def onDraw(data):
+    #print('it is player '+ str(data['id']) + 's turn')
+    socketio.emit('draw',  data, broadcast=False)
     
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg

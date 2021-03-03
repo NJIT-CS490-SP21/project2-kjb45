@@ -22,12 +22,15 @@ const [playo, setPlayO] = useState('');
 const [gameComplete, setGameComplete] = useState(false);
 const [plays, setPlays] = useState(0);
 const [winnerName, setWinnerName] = useState('');
+const [playAgain, setPlayAgain] = useState(false);
+const [draw, setDraw] = useState(false);
 //function
 
 function checkWin(){
     //console.log("reached checkwin function");
     let checkBoard = board;
     //console.log(checkBoard);
+    
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[1] && checkBoard[1] === checkBoard[2]){
         //console.log("someone has won the game 1");
         let winner = checkBoard[0];
@@ -74,7 +77,6 @@ function checkWin(){
         let actualWinner = '';
         if (winner === 'X'){
             actualWinner = playx;
-            
         }
         if (winner === 'O'){
             actualWinner = playo;
@@ -84,9 +86,6 @@ function checkWin(){
             winnerName: actualWinner
             
         })
-
-        //setAWinner(true);
-
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[5] && checkBoard[5] === checkBoard[8]){
         console.log("someone has won the game 4");
@@ -94,7 +93,6 @@ function checkWin(){
         let actualWinner = '';
         if (winner === 'X'){
             actualWinner = playx;
-            
         }
         if (winner === 'O'){
             actualWinner = playo;
@@ -102,11 +100,7 @@ function checkWin(){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner
-            
         })
-        
-        //setAWinner(true);
-
     }
     if (checkBoard[3] != ' ' && checkBoard[3] === checkBoard[4] && checkBoard[4] === checkBoard[5]){
         console.log("someone has won the game 5");
@@ -114,7 +108,6 @@ function checkWin(){
         let actualWinner = '';
         if (winner === 'X'){
             actualWinner = playx;
-            
         }
         if (winner === 'O'){
             actualWinner = playo;
@@ -122,11 +115,7 @@ function checkWin(){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner
-            
         })
-        
-        //setAWinner(true);
-
     }
     if (checkBoard[6] != ' ' && checkBoard[6] === checkBoard[7] && checkBoard[7] === checkBoard[8]){
         console.log("someone has won the game 6");
@@ -134,7 +123,6 @@ function checkWin(){
         let actualWinner = '';
         if (winner === 'X'){
             actualWinner = playx;
-            
         }
         if (winner === 'O'){
             actualWinner = playo;
@@ -142,11 +130,7 @@ function checkWin(){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner
-            
         })
-        
-        //setAWinner(true);
-
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[4] && checkBoard[4] === checkBoard[6]){
         console.log("someone has won the game 7");
@@ -154,7 +138,6 @@ function checkWin(){
         let actualWinner = '';
         if (winner === 'X'){
             actualWinner = playx;
-            
         }
         if (winner === 'O'){
             actualWinner = playo;
@@ -162,11 +145,7 @@ function checkWin(){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner
-            
         })
-    
-        //setAWinner(true);
-     
     } 
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[4] && checkBoard[4] === checkBoard[8]){
         console.log("someone has won the game 8");
@@ -184,12 +163,7 @@ function checkWin(){
             winnerName: actualWinner
             
         })
-        
-        //setAWinner(true);
-       
     }
-    
-    
 }
 
 function clicked(index){
@@ -211,8 +185,7 @@ function clicked(index){
         player2: playo,
         playCount: playCount
         
-        //sender: 
-        
+
     });
     (move === 0 ? setMove(1) : setMove(0));
     
@@ -223,6 +196,18 @@ if (plays > 4){
     console.log('checking for a winner');
     checkWin();
     
+}
+
+if (draw === true){
+    socket.emit('draw', {
+        winner: 'Draw'
+    })
+    
+}
+
+if (playAgain === true){
+        
+        
 }
 
 // if (thereIsAWinner === true){
@@ -243,6 +228,12 @@ useEffect(() => {
         });
         (currentMove === 0 ? setMove(1) : setMove(0));
         setPlays(data['playCount']);
+        let plays = data['playCount'];
+        
+        if (plays === 9){
+            setDraw(true);
+            console.log("the game ended in a draw");
+        }
 
 
     });
