@@ -11,8 +11,8 @@ export function showBoard(){
     
     document.getElementById("brd").style.display="grid";
 
-    
 }
+
 export function Board(props){
 
 const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
@@ -23,12 +23,18 @@ const [lastTurn, setLastTurn] = useState('');
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
 const [userList, setUserList] = useState([]);
+const [spectatorList, setSpectatorList] = useState([]);
+const [isSpectator, setSpectator] = useState([]);
 
 
     
 function clicked(index){
     //const userInput = useRef.current.value;
     //let newBoard = [];
+    if (setSpectator === true){
+    setCanPlay(true);
+    
+    }
     console.log("box clicked");
     const boardCopy = [...board];
     const play = lastTurn;
@@ -48,8 +54,10 @@ function clicked(index){
     
 }
 
-console.log("this is the current move");
-console.log(move);
+// console.log("this is the current move");
+// console.log(move);
+console.log("this is the current setPlay");
+console.log(canPlay);
 
 useEffect(() => {
     //listening for a new move event
@@ -78,20 +86,24 @@ useEffect(() => {
         if (check === 1){
            setCanPlay(true);
            setPlayX(data['user']);
+           //currentUser = 'playerX';
         }
         
         if (check === 2){
             setCanPlay(true);
             setPlayO(data['user']);
+            //currentUser = 'playerO';
         }
         
-        // if (check > 2 ){
-        //     setCanPlay(false);
-        // }
+        if (check > 2 ){
+            setCanPlay(false);
+        }
         
     });
 
 }, []);
+
+
 
 
 // console.log("this is the board userlist 0");
@@ -121,7 +133,7 @@ return (
             {board}
         </div>
     </div>
-    
+
     )
     
 }

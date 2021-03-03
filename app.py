@@ -56,7 +56,7 @@ def on_newUser(data):
     print(players)
     print('this is the spectators')
     print(spectators)
-    socketio.emit('new user',  data, broadcast=True, include_self=False)
+    socketio.emit('new user',  data, broadcast=False)
 
     
 @socketio.on('turn')
