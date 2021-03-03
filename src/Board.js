@@ -96,23 +96,25 @@ useEffect(() => {
 //console.log(move);
 
 return (
-    <div className="board" id="brd">
+  
         
-        <Box onClick={() => clicked(0)} newMove={board[0]}/> 
-        <Box onClick={() => clicked(1)} newMove={board[1]}/> 
-        <Box onClick={() => clicked(2)} newMove={board[2]}/> 
-        <Box onClick={() => clicked(3)} newMove={board[3]}/> 
-        <Box onClick={() => clicked(4)} newMove={board[4]}/> 
-        <Box onClick={() => clicked(5)} newMove={board[5]}/> 
-        <Box onClick={() => clicked(6)} newMove={board[6]}/> 
-        <Box onClick={() => clicked(7)} newMove={board[7]}/> 
-        <Box onClick={() => clicked(8)} newMove={board[8]}/> 
-
-        <div>
-            {board}
+        <div className="board" id="brd">
+            
+            <Box onClick={() => clicked(0)} newMove={board[0]}/> 
+            <Box onClick={() => clicked(1)} newMove={board[1]}/> 
+            <Box onClick={() => clicked(2)} newMove={board[2]}/> 
+            <Box onClick={() => clicked(3)} newMove={board[3]}/> 
+            <Box onClick={() => clicked(4)} newMove={board[4]}/> 
+            <Box onClick={() => clicked(5)} newMove={board[5]}/> 
+            <Box onClick={() => clicked(6)} newMove={board[6]}/> 
+            <Box onClick={() => clicked(7)} newMove={board[7]}/> 
+            <Box onClick={() => clicked(8)} newMove={board[8]}/> 
+        
+            <div>
+                {board}
+            </div>
         </div>
-    </div>
-
+    
     )
     
 }

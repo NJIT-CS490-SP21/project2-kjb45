@@ -31,12 +31,9 @@ function getCurrentUser() {
     let player1 = '';
     let player2 = '';
     let spectatorList = [];
-    //(newCount === 1 ? setPlayer1(user) : null);
-    //(newCount === 2 ? setPlayer2(user) : null);
-    //(newCount > 2 ? setSpectators(spectators => [...spectators, user]) : null);
+
 
     setCurrentUser(user);
-    setUsers([...sendUsers, user]);
     setCount(newCount);
    
     player1 = newCount === 1 ? user : null;   
@@ -94,7 +91,6 @@ useEffect(() => {
     
     socket.on('new user',(data) => {
         setUserCount(prevCount => prevCount + 1);
-        //console.log(data);
         setUsers(prevUser => [...prevUser, data['user']]);
         setCount(data['count']);
 
@@ -116,7 +112,7 @@ return (
             </div>
         </div>
         <div> 
-            <Board currentUser={currentUser} />
+            <Board currentUser={currentUser}/>
         </div>
     </div>
         
