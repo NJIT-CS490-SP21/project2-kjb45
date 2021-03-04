@@ -93,6 +93,7 @@ function newGame() {
         restartBoard: restartBoard,
         
     });
+ 
     
 }
     
@@ -122,6 +123,12 @@ useEffect(() => {
         let winner = data['winner'];
         setWinner(winner);
         setSomeoneDrew(true);
+        
+    });
+    
+    socket.on('yes', (data) => {
+        setSomeoneDrew(false);
+        setSomeoneWon(false);
         
     });
 

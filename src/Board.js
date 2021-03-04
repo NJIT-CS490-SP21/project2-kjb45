@@ -258,7 +258,10 @@ useEffect(() => {
         setBoard(data['restartBoard']);
         setMove(0);
         setPlays(0);
-        
+        socket.emit('yes', {
+            
+            
+        })
     }));
     
     

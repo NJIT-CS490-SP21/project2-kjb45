@@ -69,6 +69,10 @@ def on_newGame(data):
     #print('it is player '+ str(data['id']) + 's turn')
     socketio.emit('new game',  data, broadcast=False)
     
+@socketio.on('yes')
+def on_yes(data):
+    #print('it is player '+ str(data['id']) + 's turn')
+    socketio.emit('yes',  data, broadcast=False)
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 socketio.run(
