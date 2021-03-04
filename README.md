@@ -32,4 +32,4 @@
 2. The button to start a new game isnt lined up in a good position.  need to fix css
 3. I plan on adding a turn so a player can strictly play on their turn 
 4. might be some unused states; need to go back and clean up the code a little
-
+5. After clicking the yes button to start a new game the option doesnt go away -- worked fine on aws.  need to trackback on that
