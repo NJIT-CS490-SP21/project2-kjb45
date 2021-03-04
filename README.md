@@ -1,6 +1,6 @@
 # Flask and create-react-app
 
-## Requirements
+## Requirements (run all of these)
 1. `npm install`
 2. `pip install -r requirements.txt`
 3. `pip install -U flask-cors`
