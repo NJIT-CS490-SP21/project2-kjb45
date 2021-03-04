@@ -64,6 +64,11 @@ def onDraw(data):
     #print('it is player '+ str(data['id']) + 's turn')
     socketio.emit('draw',  data, broadcast=False)
     
+@socketio.on('new game')
+def on_newGame(data):
+    #print('it is player '+ str(data['id']) + 's turn')
+    socketio.emit('new game',  data, broadcast=False)
+    
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 socketio.run(

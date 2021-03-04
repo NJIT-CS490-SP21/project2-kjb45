@@ -253,6 +253,15 @@ useEffect(() => {
             setPlayO(data['user']);
         }
     });
+    
+    socket.on('new game', (data => {
+        setBoard(data['restartBoard']);
+        setMove(0);
+        setPlays(0);
+        
+    }));
+    
+    
 }, []);
 
 

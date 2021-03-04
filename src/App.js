@@ -87,6 +87,14 @@ function onShowHide() {
     });
 }
 
+function newGame() {
+    let restartBoard = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+    socket.emit('new game', {
+        restartBoard: restartBoard,
+        
+    });
+    
+}
     
 useEffect(() => {
     
@@ -126,6 +134,9 @@ return (
             
             {someoneWon === true ? <div>The winner is: {winner}</div> : null}
             {draw === true ? <div>The game ended in a draw </div> : null}
+            
+            {someoneWon === true || draw === true ? <div>Do you want to play again?</div> : null}
+            {someoneWon === true || draw === true ? <button onClick={() => newGame()}>Yes</button> : null}
             <input ref={inputRef} type="text" />
             <button onClick={() => getCurrentUser()} >Login!</button>
             <div>You are logged in as: {currentUser}</div>
