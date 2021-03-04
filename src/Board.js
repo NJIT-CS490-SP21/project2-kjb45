@@ -24,15 +24,11 @@ const [plays, setPlays] = useState(0);
 const [winnerName, setWinnerName] = useState('');
 const [playAgain, setPlayAgain] = useState(false);
 const [draw, setDraw] = useState(false);
-//function
 
 function checkWin(){
-    //console.log("reached checkwin function");
     let checkBoard = board;
-    //console.log(checkBoard);
-    
+
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[1] && checkBoard[1] === checkBoard[2]){
-        //console.log("someone has won the game 1");
         let winner = checkBoard[0];
         let actualWinner = '';
         console.log("the winner is: ");
@@ -49,8 +45,7 @@ function checkWin(){
             winnerName: actualWinner
             
         })
-        //setAWinner(true);
-        
+
     }
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[3] && checkBoard[3] === checkBoard[6]){
         console.log("someone has won the game 2");
@@ -68,7 +63,6 @@ function checkWin(){
             winnerName: actualWinner
             
         })        
-        //setAWinner(true);
 
     }
     if (checkBoard[4] != ' ' && checkBoard[4] === checkBoard[1] && checkBoard[1] === checkBoard[7]){
@@ -167,15 +161,13 @@ function checkWin(){
 }
 
 function clicked(index){
-    //const userInput = useRef.current.value;
-    //let newBoard = [];
+  
     if (props.currentUser === playx || props.currentUser === playo){
     console.log("box clicked");
     let playCount = plays + 1;
     console.log(playCount);
     setPlays(playCount);
     const boardCopy = [...board];
-    //if ()
     (move === 0 ? (boardCopy[index] = 'X') : boardCopy[index] = 'O');
     setBoard(boardCopy);
     socket.emit('board', {
@@ -210,13 +202,9 @@ if (playAgain === true){
         
 }
 
-// if (thereIsAWinner === true){
-//     console.log("reafched there is a winner");
-// }
 
 useEffect(() => {
-    //listening for a new move event
-    //run the code in the function that is passed in as the second arg
+   
     socket.on('board', (data) => {
         console.log('New move event recieved');
         console.log(data);
@@ -240,8 +228,7 @@ useEffect(() => {
        
        
     socket.on('new user', (data) => {
-        //console.log("This is user from board");        
-        //console.log(data);
+        
         let check = data['count'];
         let user = data['user'];
         
@@ -267,18 +254,6 @@ useEffect(() => {
     
 }, []);
 
-
-
-
-// console.log("this is the board userlist 0");
-// console.log(userList[0]);
-// console.log("this is playerX");
-// console.log(playx);
-// console.log("this is player0");
-// console.log(playo);
-
-//console.log(board);
-//console.log(move);
 
 return (
   
