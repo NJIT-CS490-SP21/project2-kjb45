@@ -20,7 +20,6 @@ const [count, setCount] = useState(0);
 const [player1, setPlayer1] = useState('');
 const [player2, setPlayer2] = useState('');
 const [spectators, setSpectators] = useState([]);
-//const [canPlay, setCanPlay] = useState([]);
 const [winner, setWinner] = useState(['']);
 const [someoneWon, setSomeoneWon] = useState(['']);
 const [draw, setSomeoneDrew] = useState(false);
@@ -64,10 +63,8 @@ function getCurrentUser() {
     };        
     
      if (newCount > 2) {
-        //spectatorList  [...spectatorList, user];
 
         setSpectators([...spectators, user]);
-        //need to update list
         socket.emit('new user', {
             user: user,
             count: newCount,
