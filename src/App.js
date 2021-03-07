@@ -21,7 +21,7 @@ const [player1, setPlayer1] = useState('');
 const [player2, setPlayer2] = useState('');
 const [spectators, setSpectators] = useState([]);
 const [winner, setWinner] = useState(['']);
-const [someoneWon, setSomeoneWon] = useState(['']);
+const [someoneWon, setSomeoneWon] = useState('');
 const [draw, setSomeoneDrew] = useState(false);
 
 
@@ -86,11 +86,15 @@ function onShowHide() {
 
 function newGame() {
     let restartBoard = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+    setSomeoneWon(false);
+    setSomeoneDrew(false);
+    setWinner('');
+    
     socket.emit('new game', {
         restartBoard: restartBoard,
         
     });
- 
+
     
 }
     

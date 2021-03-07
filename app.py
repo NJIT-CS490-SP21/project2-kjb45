@@ -49,23 +49,19 @@ def on_newUser(data):
     
 @socketio.on('winner')
 def onWin(data):
-
     socketio.emit('winner',  data, broadcast=False)
     
 
 @socketio.on('draw')
 def onDraw(data):
-  
     socketio.emit('draw',  data, broadcast=False)
     
 @socketio.on('new game')
 def on_newGame(data):
-   
     socketio.emit('new game',  data, broadcast=False)
     
 @socketio.on('yes')
 def on_yes(data):
-   
     socketio.emit('yes',  data, broadcast=False)
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg

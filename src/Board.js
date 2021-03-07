@@ -19,10 +19,8 @@ const [board, setBoard] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ']);
 const [move, setMove] = useState(0);
 const [playx, setPlayX] = useState('');
 const [playo, setPlayO] = useState('');
-const [gameComplete, setGameComplete] = useState(false);
 const [plays, setPlays] = useState(0);
 const [winnerName, setWinnerName] = useState('');
-const [playAgain, setPlayAgain] = useState(false);
 const [draw, setDraw] = useState(false);
 
 function checkWin(){
@@ -182,7 +180,7 @@ function clicked(index){
     (move === 0 ? setMove(1) : setMove(0));
     
     } 
-}
+
 
 if (plays > 4){
     console.log('checking for a winner');
@@ -197,9 +195,7 @@ if (draw === true){
     
 }
 
-if (playAgain === true){
-        
-        
+
 }
 
 
@@ -241,15 +237,13 @@ useEffect(() => {
         }
     });
     
-    socket.on('new game', (data => {
+    socket.on('new game', (data) => {
         setBoard(data['restartBoard']);
         setMove(0);
         setPlays(0);
-        socket.emit('yes', {
-            
-            
-        })
-    }));
+        setWinnerName('');
+        
+    });
     
     
 }, []);
