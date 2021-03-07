@@ -127,7 +127,7 @@ useEffect(() => {
         
     });
     
-    socket.on('yes', (data) => {
+    socket.on('new game', (data) => {
         setSomeoneDrew(false);
         setSomeoneWon(false);
         

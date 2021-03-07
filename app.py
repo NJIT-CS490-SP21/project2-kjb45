@@ -59,7 +59,7 @@ def on_newUser(data):
     
 @socketio.on('winner')
 def onWin(data):
-    socketio.emit('winner',  data, broadcast=False)
+    socketio.emit('winner',  data, broadcast=True, include_self=False)
     
 
 @socketio.on('draw')

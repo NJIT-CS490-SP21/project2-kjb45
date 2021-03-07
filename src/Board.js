@@ -23,21 +23,27 @@ const [plays, setPlays] = useState(0);
 const [winnerName, setWinnerName] = useState('');
 const [draw, setDraw] = useState(false);
 
-function checkWin(){
+function checkWin(board,player1,player2){
     let checkBoard = board;
-
+ 
+    console.log(board);
+    console.log("check board");
+    console.log(checkBoard);
+    console.log("running through win states");
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[1] && checkBoard[1] === checkBoard[2]){
         let winner = checkBoard[0];
         let actualWinner = '';
         console.log("the winner is: ");
         console.log(winner);
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
             
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
+        console.log("sending winner");
+
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner
@@ -50,11 +56,11 @@ function checkWin(){
         let winner = checkBoard[0];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
             
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -68,10 +74,10 @@ function checkWin(){
         let winner = checkBoard[4];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -84,10 +90,10 @@ function checkWin(){
         let winner = checkBoard[2];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -99,10 +105,10 @@ function checkWin(){
         let winner = checkBoard[3];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -114,10 +120,10 @@ function checkWin(){
         let winner = checkBoard[6];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -129,10 +135,10 @@ function checkWin(){
         let winner = checkBoard[2];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -144,11 +150,11 @@ function checkWin(){
         let winner = checkBoard[0];
         let actualWinner = '';
         if (winner === 'X'){
-            actualWinner = playx;
+            actualWinner = player1;
             
         }
         if (winner === 'O'){
-            actualWinner = playo;
+            actualWinner = player2;
         }
         socket.emit('winner', {
             winner: winner,
@@ -159,10 +165,11 @@ function checkWin(){
 }
 
 function clicked(index){
-  
+    
+    let playCount = plays + 1;
+
     if (props.currentUser === playx || props.currentUser === playo){
     console.log("box clicked");
-    let playCount = plays + 1;
     console.log(playCount);
     setPlays(playCount);
     const boardCopy = [...board];
@@ -180,23 +187,13 @@ function clicked(index){
     (move === 0 ? setMove(1) : setMove(0));
     
     } 
-
-
-if (plays > 4){
-    console.log('checking for a winner');
-    checkWin();
     
-}
-
-if (draw === true){
-    socket.emit('draw', {
-        winner: 'Draw'
-    })
-    
+   
 }
 
 
-}
+
+
 
 
 useEffect(() => {
@@ -204,6 +201,8 @@ useEffect(() => {
     socket.on('board', (data) => {
         console.log('New move event recieved');
         console.log(data);
+        console.log('new board revieved');
+        console.log(data['board']);
         let currentMove = data['move'];
         setBoard(prevBoard => {
            let boardCopy = [...prevBoard]; 
@@ -215,8 +214,17 @@ useEffect(() => {
         let plays = data['playCount'];
         
         if (plays === 9){
-            setDraw(true);
-            console.log("the game ended in a draw");
+            socket.emit('draw', {
+                winner: 'Draw'
+        })
+     
+        }
+        
+        if (plays > 4){
+            console.log('checking for a winner');
+            
+            console.log(data['player1']);
+            checkWin(data['board'],data['player1'],data['player2']);
         }
 
 
