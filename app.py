@@ -2,10 +2,21 @@ import os
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv, find_dotenv
 
 app = Flask(__name__, static_folder='./build/static')
-
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+load_dotenv(find_dotenv())
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+import models
+db.create_all()
+
+
 
 socketio = SocketIO(
     app,
@@ -14,8 +25,7 @@ socketio = SocketIO(
     manage_session=False
 )
 
-players = []
-spectators = []
+
 
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
