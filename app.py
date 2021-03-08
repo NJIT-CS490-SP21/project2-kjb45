@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 import models
 db.create_all()
 
+#models.Leaders.query.all()
 
 
 socketio = SocketIO(
@@ -36,6 +37,14 @@ def index(filename):
 @socketio.on('connect')
 def on_connect():
     print('User connected!')
+    leader_board = models.Leaders.query.all()
+    users = {}
+    #score = []
+    for user in leader_board:
+        users[user.username] = user.wins
+        
+    print(users)    
+    socketio.emit('leader board', {'users': users})
 
 @socketio.on('disconnect')
 def on_disconnect():
@@ -66,7 +75,7 @@ def on_newUser(data):
     
     if data['user'] not in users:
         print(str(data['user']) + " is not currently in all users")
-        new_user = models.Leaders(username=data['user'], wins=0)
+        new_user = models.Leaders(username=data['user'], wins=100)
         db.session.add(new_user)
         db.session.commit()
     else:
