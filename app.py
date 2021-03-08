@@ -51,18 +51,42 @@ def on_move(data):
 @socketio.on('new user')
 def on_newUser(data):
     
- 
     print('new user connected!')
     print(str(data))
-    new_user = models.User(username=data['user'])
-    db.session.add(new_user)
-    db.session.commit()
+    
+    # new_user = models.Leaders(username=data['user'],wins=0)
+    # db.session.add(new_user)
+    # db.session.commit()
+    
+    all_users = models.Leaders.query.all()
+    users = []
+    for people in all_users:
+        users.append(people.username)
+    print(users)
+    
+    if data['user'] not in users:
+        print(str(data['user']) + " is not currently in all users")
+        new_user = models.Leaders(username=data['user'], wins=0)
+        db.session.add(new_user)
+        db.session.commit()
+    else:
+        print("user already in DB")
     
     socketio.emit('new user',  data, broadcast=False)
 
     
 @socketio.on('winner')
 def onWin(data):
+    
+    
+    winner = db.session.query(models.Leaders).get(data['winnerName'])
+    winner.wins = winner.wins +1
+                    
+    db.session.commit()
+    # user = models.Leaders.query.filter_by(username=data['winnerName'])
+    # user.wins = 1;
+    # db.session.add(user.wins)
+    # db.session.commit()
     socketio.emit('winner',  data, broadcast=True, include_self=False)
     
 
