@@ -16,7 +16,8 @@ db = SQLAlchemy(app)
 import models
 db.create_all()
 
-
+all_users = []
+models.User.query.all()
 
 socketio = SocketIO(
     app,
@@ -50,9 +51,13 @@ def on_move(data):
 @socketio.on('new user')
 def on_newUser(data):
     
- 
     print('new user connected!')
     print(str(data))
+    new_user=models.User(username=data['username'], wins=0)
+    db.session.add(new_user)
+    db.session.commit()
+    all_users = models.User.query.all()
+    print(all_users);
  
     socketio.emit('new user',  data, broadcast=False)
 
