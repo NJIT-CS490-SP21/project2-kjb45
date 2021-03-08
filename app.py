@@ -5,9 +5,10 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
+
 app = Flask(__name__, static_folder='./build/static')
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-load_dotenv(find_dotenv())
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -53,7 +54,10 @@ def on_newUser(data):
  
     print('new user connected!')
     print(str(data))
- 
+    new_user = models.User(username=data['user'])
+    db.session.add(new_user)
+    db.session.commit()
+    
     socketio.emit('new user',  data, broadcast=False)
 
     
@@ -75,8 +79,10 @@ def on_yes(data):
     socketio.emit('yes',  data, broadcast=False)
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
-socketio.run(
-    app,
-    host=os.getenv('IP', '0.0.0.0'),
-    port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
-)
+if __name__ == "__main__":
+# Note that we don't call app.run anymore. We call socketio.run with app arg
+    socketio.run(
+        app,
+        host=os.getenv('IP', '0.0.0.0'),
+        port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
+    )
