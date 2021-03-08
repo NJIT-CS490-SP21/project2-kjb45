@@ -96,8 +96,17 @@ def onWin(data):
     # user.wins = 1;
     # db.session.add(user.wins)
     # db.session.commit()
-    socketio.emit('winner',  data, broadcast=True, include_self=False)
-    
+    socketio.emit('winner',  data, broadcast=False)
+    all_users = models.Leaders.query.all()
+    users = {}
+    #score = []
+    leader_board = models.Leaders.query.all()
+
+    for user in leader_board:
+        users[user.username] = user.wins
+    print("this is from winner")    
+    print(users)    
+    socketio.emit('leader board', {'users': users}, broadcast=False)
 
 @socketio.on('draw')
 def onDraw(data):
@@ -110,6 +119,11 @@ def on_newGame(data):
 @socketio.on('yes')
 def on_yes(data):
     socketio.emit('yes',  data, broadcast=False)
+    
+@socketio.on('leader board')
+def on_leaderBoard(data):
+    socketio.emit('leader board',  data, broadcast=False)
+
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 if __name__ == "__main__":
