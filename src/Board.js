@@ -22,10 +22,13 @@ const [playo, setPlayO] = useState('');
 const [plays, setPlays] = useState(0);
 const [winnerName, setWinnerName] = useState('');
 const [draw, setDraw] = useState(false);
+const [user, setUser] = useState('');
+
 
 function checkWin(board,player1,player2){
     let checkBoard = board;
- 
+    console.log("this is check wins props.currentUser");
+    console.log(props.currentUser);
     console.log(board);
     console.log("check board");
     console.log(checkBoard);
@@ -45,13 +48,17 @@ function checkWin(board,player1,player2){
             actualLoser = player1;
         }
         console.log("sending winner");
-
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser
-            
-        })
+        console.log() 
+        if (winner === user){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser,
+                user: user
+                
+            })
+    
+        }
 
     }
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[3] && checkBoard[3] === checkBoard[6]){
@@ -71,7 +78,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loesrName: actualLoser
+            loesrName: actualLoser,
+            user: user
             
         })        
 
@@ -92,7 +100,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
             
         })
     }
@@ -112,7 +121,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
         })
     }
     if (checkBoard[3] != ' ' && checkBoard[3] === checkBoard[4] && checkBoard[4] === checkBoard[5]){
@@ -131,7 +141,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
         })
     }
     if (checkBoard[6] != ' ' && checkBoard[6] === checkBoard[7] && checkBoard[7] === checkBoard[8]){
@@ -150,7 +161,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
         })
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[4] && checkBoard[4] === checkBoard[6]){
@@ -169,7 +181,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
         })
     } 
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[4] && checkBoard[4] === checkBoard[8]){
@@ -189,7 +202,8 @@ function checkWin(board,player1,player2){
         socket.emit('winner', {
             winner: winner,
             winnerName: actualWinner,
-            loserName: actualLoser
+            loserName: actualLoser,
+            user: user
             
         })
     }
@@ -198,6 +212,7 @@ function checkWin(board,player1,player2){
 function clicked(index){
     
     let playCount = plays + 1;
+    console.log(props.currentUser);
 
     if (props.currentUser === playx || props.currentUser === playo){
     console.log("box clicked");
@@ -212,7 +227,6 @@ function clicked(index){
         player1: playx,
         player2: playo,
         playCount: playCount
-        
 
     });
     (move === 0 ? setMove(1) : setMove(0));
@@ -266,7 +280,6 @@ useEffect(() => {
         
         let check = data['count'];
         let user = data['user'];
-        
         if (check === 1){
             setPlayX(data['user']);
         }
@@ -274,6 +287,7 @@ useEffect(() => {
         if (check === 2){
             setPlayO(data['user']);
         }
+        
     });
     
     socket.on('new game', (data) => {

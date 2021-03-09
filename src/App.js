@@ -110,6 +110,8 @@ function leaderBoardShow() {
         </ul>
     )
 }
+
+
     
 useEffect(() => {
     
@@ -172,10 +174,12 @@ return (
             ))}
             </div>
             <div>
-                <h3>Current Leader Board</h3>
-                {leaderBoardShow()}
-            
+                <button onClick={() => onShowHide()}>Leader Board</button>
+                {isShown !== true ? <div><h3>Current Leader Board</h3><div>{leaderBoardShow()}</div></div> :null}
             </div>
+            
+            
+            
         </div>
         <div> 
             <Board currentUser={currentUser}/>

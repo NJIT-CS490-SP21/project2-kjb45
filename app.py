@@ -86,11 +86,10 @@ def on_newUser(data):
     
 @socketio.on('winner')
 def onWin(data):
-    
-    
+    print(data)
     winner = db.session.query(models.Leaders).get(data['winnerName'])
-    loser = db.session.query(models.Leaders).get(data['loserName'])
     winner.wins = winner.wins + 1
+    loser = db.session.query(models.Leaders).get(data['loserName'])
     loser.wins = loser.wins - 1
                     
     db.session.commit()
@@ -130,6 +129,7 @@ def on_yes(data):
 # Note that we don't call app.run anymore. We call socketio.run with app arg
 if __name__ == "__main__":
 # Note that we don't call app.run anymore. We call socketio.run with app arg
+    #db.create_all()
     socketio.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
