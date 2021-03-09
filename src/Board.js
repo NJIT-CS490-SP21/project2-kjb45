@@ -33,20 +33,23 @@ function checkWin(board,player1,player2){
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[1] && checkBoard[1] === checkBoard[2]){
         let winner = checkBoard[0];
         let actualWinner = '';
+        let actualLoser = '';
         console.log("the winner is: ");
         console.log(winner);
         if (winner === 'X'){
             actualWinner = player1;
-            
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         console.log("sending winner");
 
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
             
         })
 
@@ -55,16 +58,20 @@ function checkWin(board,player1,player2){
         console.log("someone has won the game 2");
         let winner = checkBoard[0];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
             
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loesrName: actualLoser
             
         })        
 
@@ -73,15 +80,19 @@ function checkWin(board,player1,player2){
         console.log("someone has won the game 3");
         let winner = checkBoard[4];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
             
         })
     }
@@ -89,76 +100,96 @@ function checkWin(board,player1,player2){
         console.log("someone has won the game 4");
         let winner = checkBoard[2];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
         })
     }
     if (checkBoard[3] != ' ' && checkBoard[3] === checkBoard[4] && checkBoard[4] === checkBoard[5]){
         console.log("someone has won the game 5");
         let winner = checkBoard[3];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualWinner = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
         })
     }
     if (checkBoard[6] != ' ' && checkBoard[6] === checkBoard[7] && checkBoard[7] === checkBoard[8]){
         console.log("someone has won the game 6");
         let winner = checkBoard[6];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
         })
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[4] && checkBoard[4] === checkBoard[6]){
         console.log("someone has won the game 7");
         let winner = checkBoard[2];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
         })
     } 
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[4] && checkBoard[4] === checkBoard[8]){
         console.log("someone has won the game 8");
         let winner = checkBoard[0];
         let actualWinner = '';
+        let actualLoser = '';
         if (winner === 'X'){
             actualWinner = player1;
+            actualLoser = player2;
             
         }
         if (winner === 'O'){
             actualWinner = player2;
+            actualLoser = player1;
         }
         socket.emit('winner', {
             winner: winner,
-            winnerName: actualWinner
+            winnerName: actualWinner,
+            loserName: actualLoser
             
         })
     }

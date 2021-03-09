@@ -89,7 +89,9 @@ def onWin(data):
     
     
     winner = db.session.query(models.Leaders).get(data['winnerName'])
-    winner.wins = winner.wins +1
+    loser = db.session.query(models.Leaders).get(data['loserName'])
+    winner.wins = winner.wins + 1
+    loser.wins = loser.wins - 1
                     
     db.session.commit()
     # user = models.Leaders.query.filter_by(username=data['winnerName'])
