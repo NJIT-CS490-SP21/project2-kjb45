@@ -120,9 +120,9 @@ def on_newGame(data):
 def on_yes(data):
     socketio.emit('yes',  data, broadcast=False)
     
-@socketio.on('leader board')
-def on_leaderBoard(data):
-    socketio.emit('leader board',  data, broadcast=False)
+# @socketio.on('leader board')
+# def on_leaderBoard(data):
+#     socketio.emit('leader board',  data, broadcast=False)
 
 
 # Note that we don't call app.run anymore. We call socketio.run with app arg
