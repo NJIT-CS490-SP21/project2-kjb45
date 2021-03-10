@@ -24,7 +24,7 @@ const [winnerName, setWinnerName] = useState('');
 const [draw, setDraw] = useState(false);
 const [user, setUser] = useState('');
 
-
+console.log(props.currentUser);
 function checkWin(board,player1,player2){
     let checkBoard = board;
     console.log("this is check wins props.currentUser");
@@ -48,18 +48,17 @@ function checkWin(board,player1,player2){
             actualLoser = player1;
         }
         console.log("sending winner");
-        console.log() 
-        if (winner === user){
+        
+        if (actualWinner === props.currentUser){
             socket.emit('winner', {
                 winner: winner,
                 winnerName: actualWinner,
-                loserName: actualLoser,
-                user: user
+                loserName: actualLoser
                 
+                    
             })
-    
         }
-
+    
     }
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[3] && checkBoard[3] === checkBoard[6]){
         console.log("someone has won the game 2");
@@ -75,13 +74,14 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loesrName: actualLoser,
-            user: user
-            
-        })        
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                
+            })
+        }    
 
     }
     if (checkBoard[4] != ' ' && checkBoard[4] === checkBoard[1] && checkBoard[1] === checkBoard[7]){
@@ -97,13 +97,15 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-            
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                
+                    
+            })
+        }
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[5] && checkBoard[5] === checkBoard[8]){
         console.log("someone has won the game 4");
@@ -118,12 +120,14 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                    
+            })
+        }
     }
     if (checkBoard[3] != ' ' && checkBoard[3] === checkBoard[4] && checkBoard[4] === checkBoard[5]){
         console.log("someone has won the game 5");
@@ -136,14 +140,16 @@ function checkWin(board,player1,player2){
         }
         if (winner === 'O'){
             actualWinner = player2;
-            actualWinner = player1;
+            actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+    
+            })
+        }
     }
     if (checkBoard[6] != ' ' && checkBoard[6] === checkBoard[7] && checkBoard[7] === checkBoard[8]){
         console.log("someone has won the game 6");
@@ -158,12 +164,14 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                    
+            })
+        }
     }
     if (checkBoard[2] != ' ' && checkBoard[2] === checkBoard[4] && checkBoard[4] === checkBoard[6]){
         console.log("someone has won the game 7");
@@ -178,12 +186,15 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                
+                    
+            })
+        }
     } 
     if (checkBoard[0] != ' ' && checkBoard[0] === checkBoard[4] && checkBoard[4] === checkBoard[8]){
         console.log("someone has won the game 8");
@@ -199,13 +210,14 @@ function checkWin(board,player1,player2){
             actualWinner = player2;
             actualLoser = player1;
         }
-        socket.emit('winner', {
-            winner: winner,
-            winnerName: actualWinner,
-            loserName: actualLoser,
-            user: user
-            
-        })
+        if (actualWinner === props.currentUser){
+            socket.emit('winner', {
+                winner: winner,
+                winnerName: actualWinner,
+                loserName: actualLoser
+                
+            })
+        }
     }
 }
 
@@ -299,7 +311,7 @@ useEffect(() => {
     });
     
     
-}, []);
+}, [props.currentUser]);
 
 
 return (
