@@ -77,7 +77,9 @@ def on_newUser(data):
         print(str(data['user']) + " is not currently in all users")
         new_user = models.Leaders(username=data['user'], wins=100)
         db.session.add(new_user)
-        db.session.commit()
+        db.session.commit() 
+        #socketio.emit('leader board', {'users': users}, broadcast=False) 
+
     else:
         print("user already in DB")
     
