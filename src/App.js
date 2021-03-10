@@ -23,6 +23,7 @@ const [spectators, setSpectators] = useState([]);
 const [winner, setWinner] = useState(['']);
 const [someoneWon, setSomeoneWon] = useState('');
 const [draw, setSomeoneDrew] = useState(false);
+const [leaderBoard, setLeaderBoard] = useState({});
 
 
 function getCurrentUser() {
@@ -97,6 +98,20 @@ function newGame() {
 
     
 }
+
+function leaderBoardShow() {
+    return( 
+        <ul>
+            {Object.entries(leaderBoard).map(([key,value]) => {
+                
+                return <li key={key}><b>{key}: </b> {value}</li>
+            })}
+        
+        </ul>
+    )
+}
+
+
     
 useEffect(() => {
     
@@ -132,6 +147,12 @@ useEffect(() => {
         setSomeoneWon(false);
         
     });
+    
+    socket.on('leader board', (data) => {
+       console.log("leader board event revieved");
+       console.log(data);
+       setLeaderBoard(data.users);
+    });
 
 
 }, []);    
@@ -152,6 +173,13 @@ return (
                 <li>{item}</li>
             ))}
             </div>
+            <div>
+                <button onClick={() => onShowHide()}>Leader Board</button>
+                {isShown !== true ? <div><h3>Current Leader Board</h3><div>{leaderBoardShow()}</div></div> :null}
+            </div>
+            
+            
+            
         </div>
         <div> 
             <Board currentUser={currentUser}/>
