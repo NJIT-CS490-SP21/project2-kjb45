@@ -35,7 +35,7 @@
 1. Had problems initially with socketio.  Too many people were initially getting emits
 2. Had problems understanding on socket at first; quickly learned solutions for this though
 3. Had a hard time passing props to functions inside of Board.js -- had to add 
-4. leaderboard only registers new user when the page is refreshed
+4. leaderboard only displays new user when the page is refreshed
 
 ## Problems
 1. There is technically no first player as of right now. Therefore the X player would have to play first
@@ -44,3 +44,4 @@
 4. might be some unused states; need to go back and clean up the code a little
 5. After clicking the yes button to start a new game the option doesnt go away -- worked fine on aws.  need to trackback on that
 6. both users can still play on each others turns -- need to fix by M3
+
