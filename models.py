@@ -7,6 +7,6 @@ class Leaders(db.Model):
 
     
     def __repr__(self):
-        return '<Person %r>' % self.username
+        return '%r' % self.username
 
         

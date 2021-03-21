@@ -4,6 +4,8 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
+from collections import OrderedDict
+
 
 load_dotenv(find_dotenv())
 
@@ -42,9 +44,20 @@ def on_connect():
     #score = []
     for user in leader_board:
         users[user.username] = user.wins
-        
+
     print(users)    
     socketio.emit('leader board', {'users': users})
+
+def get_leader_array():
+    leader_board = models.Leaders.query.all()
+    users = []
+    for user in leader_board:
+        users.append(user)
+        
+    return(users)    
+        
+
+
 
 @socketio.on('disconnect')
 def on_disconnect():
@@ -120,7 +133,8 @@ def leader_winner(winner,loser):
     loser = models.Leaders.query.get(loser)
     loser.wins = loser.wins - 1
     db.session.commit()
-    return({winner: winner.wins, loser: loser.wins})
+    senddict = {winner.username: winner.wins, loser.username: loser.wins}
+    return(senddict)
 
 def leader_winner_send():
     all_users = models.Leaders.query.all()
