@@ -37,7 +37,7 @@ def index(filename):
 @socketio.on('connect')
 def on_connect():
     print('User connected!')
-    leader_board = models.Leaders.query.all()
+    leader_board = models.Leaders.query.all() 
     users = {}
     #score = []
     for user in leader_board:
@@ -89,17 +89,40 @@ def on_newUser(data):
 @socketio.on('winner')
 def onWin(data):
     print(data)
-    winner = db.session.query(models.Leaders).get(data['winnerName'])
-    winner.wins = winner.wins + 1
-    loser = db.session.query(models.Leaders).get(data['loserName'])
-    loser.wins = loser.wins - 1
+    # winner = db.session.query(models.Leaders).get(data['winnerName'])
+    # winner.wins = winner.wins + 1
+    # loser = db.session.query(models.Leaders).get(data['loserName'])
+    # loser.wins = loser.wins - 1
                     
-    db.session.commit()
-    # user = models.Leaders.query.filter_by(username=data['winnerName'])
-    # user.wins = 1;
-    # db.session.add(user.wins)
     # db.session.commit()
+    # # user = models.Leaders.query.filter_by(username=data['winnerName'])
+    # # user.wins = 1;
+    # # db.session.add(user.wins)
+    # # db.session.commit()
+    # socketio.emit('winner',  data, broadcast=False)
+    # all_users = models.Leaders.query.all()
+    # users = {}
+    # #score = []
+    # leader_board = models.Leaders.query.all()
+
+    # for user in leader_board:
+    #     users[user.username] = user.wins
+    # print("this is from winner")    
+    # print(users)
+    leader_winner(data['winnerName'], data['loserName'])
     socketio.emit('winner',  data, broadcast=False)
+
+    socketio.emit('leader board', leader_winner_send(), broadcast=False)
+
+def leader_winner(winner,loser):
+    winner = models.Leaders.query.get(winner)
+    winner.wins = winner.wins + 1
+    loser = models.Leaders.query.get(loser)
+    loser.wins = loser.wins - 1
+    db.session.commit()
+    return({winner: winner.wins, loser: loser.wins})
+
+def leader_winner_send():
     all_users = models.Leaders.query.all()
     users = {}
     #score = []
@@ -108,8 +131,9 @@ def onWin(data):
     for user in leader_board:
         users[user.username] = user.wins
     print("this is from winner")    
-    print(users)    
-    socketio.emit('leader board', {'users': users}, broadcast=False)
+    print(users)
+    return {'users' : users}
+
 
 @socketio.on('draw')
 def onDraw(data):
