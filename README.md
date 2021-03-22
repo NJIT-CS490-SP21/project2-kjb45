@@ -13,6 +13,8 @@
 9. `sudo service postgresql start`
 10. `pip install psycopg2-binary`
 11. `pip install Flask-SQLAlchemy==2.1`
+12. `npm install --save-dev @testing-library/react`
+
 
 
 ## Setup
