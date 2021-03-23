@@ -1,0 +1,17 @@
+"extends": ["airbnb", "react-app"]
+
+"ignorePatterns": ["reportWebVitals.js"]
+
+"rules": {
+  "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+  "react/prop-types": "off",
+  "no-shadow": "off",
+  "react/destructuring-assignment": "off",
+  "no-console": "off",
+  "react-hooks/exhaustive-deps": "off",
+  "jsx-a11y/click-events-have-key-events": "off",
+  "jsx-a11y/no-static-element-interactions": "off"
+
+
+}
+

@@ -1,194 +1,169 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect, useRef } from 'react';
-import { Board, showBoard } from './Board.js';
-import { User } from './User.js';
+import React, {
+  useState, useEffect, useRef,
+} from 'react';
+
 import io from 'socket.io-client';
+import { Board, showBoard } from './Board';
 
-
-const socket = io(); //connects to socket connection
-
+const socket = io(); // connects to socket connection
 
 function App() {
+  const [isShown, setShown] = useState(true);
+  const inputRef = useRef(null);
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState('');
+  const [count, setCount] = useState(0);
 
-const [isShown, setShown] = useState(true); 
-const [userCount, setUserCount] = useState(0);
-const inputRef = useRef(null);    
-const [users, setUsers] = useState([]);
-const [currentUser, setCurrentUser] = useState('');
-const [count, setCount] = useState(0);
-const [player1, setPlayer1] = useState('');
-const [player2, setPlayer2] = useState('');
-const [spectators, setSpectators] = useState([]);
-const [winner, setWinner] = useState(['']);
-const [someoneWon, setSomeoneWon] = useState('');
-const [draw, setSomeoneDrew] = useState(false);
-const [leaderBoard, setLeaderBoard] = useState({});
+  const [spectators, setSpectators] = useState([]);
+  const [winner, setWinner] = useState(['']);
+  const [someoneWon, setSomeoneWon] = useState('');
+  const [draw, setSomeoneDrew] = useState(false);
+  const [leaderBoard, setLeaderBoard] = useState({});
 
-
-function getCurrentUser() {
+  function getCurrentUser() {
     const user = inputRef.current.value;
-    let newCount = count + 1;
-    let sendUsers = users;
-    let player1 = '';
-    let player2 = '';
-    let spectatorList = [];
-
+    const newCount = count + 1;
 
     setCurrentUser(user);
     setCount(newCount);
-   
-    player1 = newCount === 1 ? user : null;   
-    player2 = newCount === 2 ? user : null;
-  
+
     if (newCount === 1) {
-        setPlayer1(player1);
-        socket.emit('new user', {
-            user: user,
-            count: newCount,
-            player : 'X'
-        
-        })
-        
-    };    
-    
+      socket.emit('new user', {
+        user,
+        count: newCount,
+        player: 'X',
+
+      });
+    }
+
     if (newCount === 2) {
-        setPlayer2(player2);
-        socket.emit('new user', {
-            user: user,
-            count: newCount,
-            player : 'O'
-        
-        })
-        
-    };        
-    
-     if (newCount > 2) {
+      socket.emit('new user', {
+        user,
+        count: newCount,
+        player: 'O',
 
-        setSpectators([...spectators, user]);
-        socket.emit('new user', {
-            user: user,
-            count: newCount,
-            player : 'spectator'
-        
-        })
-     };
-    
+      });
+    }
+
+    if (newCount > 2) {
+      setSpectators([...spectators, user]);
+      socket.emit('new user', {
+        user,
+        count: newCount,
+        player: 'spectator',
+
+      });
+    }
+
     showBoard();
-    
-}
+  }
 
-function onShowHide() {
-    setShown((prevShown) => {
-        return !prevShown;
-        
-    });
-}
+  function onShowHide() {
+    setShown((prevShown) => !prevShown);
+  }
 
-function newGame() {
-    let restartBoard = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+  function newGame() {
+    const restartBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
     setSomeoneWon(false);
     setSomeoneDrew(false);
     setWinner('');
-    
+
     socket.emit('new game', {
-        restartBoard: restartBoard,
-        
-    });
-
-    
-}
-
-function leaderBoardShow() {
-    return( 
-        <ul>
-            {Object.entries(leaderBoard).map(([key,value]) => {
-                
-                return <li key={key}><b>{key}: </b> {value}</li>
-            })}
-        
-        </ul>
-    )
-}
-
-
-    
-useEffect(() => {
-    
-    socket.on('new user',(data) => {
-        setUserCount(prevCount => prevCount + 1);
-        setUsers(prevUser => [...prevUser, data['user']]);
-        setCount(data['count']);
-
+      restartBoard,
 
     });
-    
-    socket.on('winner', (data) => {
-        console.log("this is from app.js");
-        console.log("the winner is: ");
-        let winner = data['winner'];
-        let winnerName = data['winnerName']
-        setWinner(winnerName);
-        setSomeoneWon(true);
-        console.log(winner);
-        console.log(data['winnerName']);
-        
-    });
-    
-    socket.on('draw', (data) => {
-        let winner = data['winner'];
-        setWinner(winner);
-        setSomeoneDrew(true);
-        
-    });
-    
-    socket.on('new game', (data) => {
-        setSomeoneDrew(false);
-        setSomeoneWon(false);
-        
-    });
-    
-    socket.on('leader board', (data) => {
-       console.log("leader board event revieved");
-       console.log(data);
-       setLeaderBoard(data.users);
-    });
+  }
 
+  function leaderBoardShow() {
+    return (
+      <ul>
+        {Object.entries(leaderBoard).map(([key, value]) => (
+          <li key={key}>
+            <b>
+              {key}
+              :
+              {' '}
+            </b>
+            {' '}
+            {value}
+          </li>
+        ))}
 
-}, []);    
-
-return (
-    <div className="App">
-        <div>
-            
-            {someoneWon === true ? <div>The winner is: {winner}</div> : null}
-            {draw === true ? <div>The game ended in a draw </div> : null}
-            
-            {someoneWon === true || draw === true ? <div>Do you want to play again?</div> : null}
-            {someoneWon === true || draw === true ? <button onClick={() => newGame()}>Yes</button> : null}
-            <input ref={inputRef} type="text" />
-            <button onClick={() => getCurrentUser()} >Login!</button>
-            <div>You are logged in as: {currentUser}</div>
-            <div>Users in Lobby{users.map((item) => (
-                <li>{item}</li>
-            ))}
-            </div>
-            <div>
-                <button onClick={() => onShowHide()}>Leader Board</button>
-                {isShown !== true ? <div><h3>Current Leader Board</h3><div>{leaderBoardShow()}</div></div> :null}
-            </div>
-            
-            
-            
-        </div>
-        <div> 
-            <Board currentUser={currentUser}/>
-        </div>
-    </div>
-        
+      </ul>
     );
-    
-}
+  }
 
+  useEffect(() => {
+    socket.on('new user', (data) => {
+      setUsers((prevUser) => [...prevUser, data.user]);
+      setCount(data.count);
+    });
+
+    socket.on('winner', (data) => {
+      const { winnerName } = data;
+      setWinner(winnerName);
+      setSomeoneWon(true);
+    });
+
+    socket.on('draw', (data) => {
+      setWinner(data);
+      setSomeoneDrew(true);
+    });
+
+    socket.on('new game', () => {
+      setSomeoneDrew(false);
+      setSomeoneWon(false);
+    });
+
+    socket.on('leader board', (data) => {
+      setLeaderBoard(data.users);
+    });
+  }, []);
+
+  return (
+    <div className="App">
+      <div>
+
+        {someoneWon === true ? (
+          <div>
+            The winner is:
+            {winner}
+          </div>
+        ) : null}
+        {draw === true ? <div>The game ended in a draw </div> : null}
+
+        {someoneWon === true || draw === true ? <div>Do you want to play again?</div> : null}
+        {someoneWon === true || draw === true ? <button type="button" onClick={() => newGame()}>Yes</button> : null}
+        <input ref={inputRef} type="text" />
+        <button type="button" onClick={() => getCurrentUser()}>Login!</button>
+        <div>
+          You are logged in as:
+          {currentUser}
+        </div>
+        <div>
+          Users in Lobby
+          {users.map((item) => (
+            <li>{item}</li>
+          ))}
+        </div>
+        <div>
+          <button type="button" onClick={() => onShowHide()}>Leader Board</button>
+          {isShown !== true ? (
+            <div>
+              <h3>Current Leader Board</h3>
+              <div>{leaderBoardShow()}</div>
+            </div>
+          ) : null}
+        </div>
+
+      </div>
+      <div>
+        <Board currentUser={currentUser} />
+      </div>
+    </div>
+
+  );
+}
 
 export default App;
