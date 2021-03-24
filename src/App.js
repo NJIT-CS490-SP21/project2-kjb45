@@ -117,6 +117,7 @@ function App() {
     });
 
     socket.on('leader board', (data) => {
+     
       setLeaderBoard(data.users);
     });
   }, []);
