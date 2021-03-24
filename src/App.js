@@ -101,13 +101,13 @@ function App() {
     });
 
     socket.on('winner', (data) => {
-      const { winnerName } = data;
+      const { winnerName } = data.winnerName;
       setWinner(winnerName);
       setSomeoneWon(true);
     });
 
     socket.on('draw', (data) => {
-      setWinner(data);
+      setWinner(data.winner);
       setSomeoneDrew(true);
     });
 
@@ -117,7 +117,6 @@ function App() {
     });
 
     socket.on('leader board', (data) => {
-     
       setLeaderBoard(data.users);
     });
   }, []);

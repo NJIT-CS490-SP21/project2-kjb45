@@ -46,7 +46,7 @@ def on_connect():
         users[user.username] = user.wins
 
     print(users)    
-    socketio.emit('leader board', {'users': users})
+    socketio.emit('leader board', {'users': users}, broadcast=False)
 
 def get_leader_array():
     leader_board = models.Leaders.query.all()
