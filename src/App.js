@@ -16,7 +16,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   const [spectators, setSpectators] = useState([]);
-  const [winner, setWinner] = useState(['']);
+  const [winner, setWinner] = useState('');
   const [someoneWon, setSomeoneWon] = useState('');
   const [draw, setSomeoneDrew] = useState(false);
   const [leaderBoard, setLeaderBoard] = useState({});
@@ -101,8 +101,7 @@ function App() {
     });
 
     socket.on('winner', (data) => {
-      const { winnerName } = data.winnerName;
-      setWinner(winnerName);
+      setWinner(data.winnerName);
       setSomeoneWon(true);
     });
 
@@ -114,6 +113,7 @@ function App() {
     socket.on('new game', () => {
       setSomeoneDrew(false);
       setSomeoneWon(false);
+      setWinner('');
     });
 
     socket.on('leader board', (data) => {

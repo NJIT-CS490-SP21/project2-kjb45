@@ -46,7 +46,7 @@ def on_connect():
         users[user.username] = user.wins
 
     print(users)    
-    socketio.emit('leader board', {'users': users}, broadcast=False)
+    socketio.emit('leader board', {'users': users})
 
 def get_leader_array():
     leader_board = models.Leaders.query.all()
@@ -137,7 +137,6 @@ def leader_winner(winner,loser):
     return(senddict)
 
 def leader_winner_send():
-    all_users = models.Leaders.query.all()
     users = {}
     #score = []
     leader_board = models.Leaders.query.all()
@@ -155,6 +154,8 @@ def onDraw(data):
     
 @socketio.on('new game')
 def on_newGame(data):
+    print("this is new game from python")
+    print(data)
     socketio.emit('new game',  data, broadcast=False)
     
 @socketio.on('yes')
