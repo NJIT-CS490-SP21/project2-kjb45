@@ -51,8 +51,8 @@ class LeaderBoardTestCase(unittest.TestCase):
         
     def test_success(self):
         for test in self.success_test_params:
-            with patch('models.Leaders.query') as mocked_query:
-                mocked_query.get = self.mocked_db_session_leader_update
+            with patch('app.db.session.query') as mocked_query:
+                mocked_query(models.Leaders).get = self.mocked_db_session_leader_update
                 with patch('app.db.session.commit', self.mocked_db_session_commit):
                    
                     
