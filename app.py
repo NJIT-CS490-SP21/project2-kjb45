@@ -128,12 +128,14 @@ def onWin(data):
     socketio.emit('leader board', leader_winner_send(), broadcast=False)
 
 def leader_winner(winner,loser):
-    winner = models.Leaders.query.get(winner)
+    winner = db.session.query(models.Leaders).get(winner)
     winner.wins = winner.wins + 1
-    loser = models.Leaders.query.get(loser)
+    loser = db.session.query(models.Leaders).get(loser)
     loser.wins = loser.wins - 1
     db.session.commit()
     senddict = {winner.username: winner.wins, loser.username: loser.wins}
+    # print("This is esnddict")
+    # print(senddict)
     return(senddict)
 
 def leader_winner_send():
@@ -154,8 +156,6 @@ def onDraw(data):
     
 @socketio.on('new game')
 def on_newGame(data):
-    print("this is new game from python")
-    print(data)
     socketio.emit('new game',  data, broadcast=False)
     
 @socketio.on('yes')
